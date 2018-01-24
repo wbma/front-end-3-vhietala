@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MediaService} from '../services/media.service';
-import {forEach} from '@angular/router/src/utils/collection';
+import {DigitransitService} from '../services/digitransit.service';
 
 @Component({
   selector: 'app-list-media',
@@ -12,7 +12,9 @@ export class ListMediaComponent implements OnInit {
   printThis: string;
   mediaArray: any;
 
-  constructor(public mediaService: MediaService) {
+  stopArray: any;
+
+  constructor(public mediaService: MediaService, private digitransitService: DigitransitService) {
   }
 
   ngOnInit() {
@@ -30,6 +32,11 @@ export class ListMediaComponent implements OnInit {
 
       console.log(this.mediaArray);
 
+    });
+
+    this.digitransitService.getRoutes('Gransinmäki').subscribe(response => {
+      console.log(response['data'].stops);
+      this.stopArray = response.data.stops;
     });
   }
 
